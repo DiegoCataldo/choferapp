@@ -23,4 +23,4 @@ store.firebaseAuthIsReady.then(() => {
   ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('root'));
 
 });
-//serviceWorker.register();
+serviceWorker.register();

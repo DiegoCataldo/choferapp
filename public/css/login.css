@@ -29,7 +29,7 @@
 }
 
 .logo-nav {
-	width: 170px;
+	width: 210px;
 	height: 100px;
 	margin-top: 2em;
 	margin-bottom: 0em;
@@ -48,14 +48,14 @@
 	}
 
 	.logov2>img {
-		width: 80px;
-		height: 40px;
-		margin-top: 13px;
+		width: 120px;
+		height: 60px;
+		margin-top: 3px;
 		top: 0px;
 		margin-left: 0px;
 	}
 	.logov3>img {
-		width: 95px;
+		width: 150px;
 		height: 52px;
 		margin-top: 6px;
 		top: 0px;

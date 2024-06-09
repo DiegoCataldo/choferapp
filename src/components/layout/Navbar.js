@@ -31,8 +31,8 @@ class Navbar extends Component {
       <SignedOutLinks />
     );
 
-    const navLinkLogIn = <Link to='/' className="left brand-logo logov3 logged-in"> <img src={require('../../img/Logo.png')} alt='logov1' /> </Link> ;
-    const navLinkLogOut = <Link to='/' className="left brand-logo logov1 logged-out"> <img src={require('../../img/jdworkLogov2.png')} alt='logov1' /> </Link>;
+    const navLinkLogIn = <Link to='/' className="left brand-logo logov3 logged-in"> <img src={require('../../img/AG.png')} alt='logov1' /> </Link> ;
+    const navLinkLogOut = <Link to='/' className="left brand-logo logov1 logged-out"> <img src={require('../../img/AG.png')} alt='logov1' /> </Link>;
     
     const navLink = auth.uid ? (
      navLinkLogIn

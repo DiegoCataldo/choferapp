@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/static/css/main.86cc7215.css",
+    "main.js": "/static/js/main.77164948.js",
+    "static/js/963.6293577a.chunk.js": "/static/js/963.6293577a.chunk.js",
+    "static/js/413.49e050b4.chunk.js": "/static/js/413.49e050b4.chunk.js",
+    "static/js/544.1fed009e.chunk.js": "/static/js/544.1fed009e.chunk.js",
+    "static/media/LogoCeazamet.png": "/static/media/LogoCeazamet.c7e0f494708ddc58a153.png",
+    "static/media/logoEJ.png": "/static/media/logoEJ.8ae6e2ca6bdaa5b92daf.png",
+    "static/media/AG.png": "/static/media/AG.86db7a032c932ff839fc.png",
+    "index.html": "/index.html",
+    "main.86cc7215.css.map": "/static/css/main.86cc7215.css.map",
+    "main.77164948.js.map": "/static/js/main.77164948.js.map",
+    "963.6293577a.chunk.js.map": "/static/js/963.6293577a.chunk.js.map",
+    "413.49e050b4.chunk.js.map": "/static/js/413.49e050b4.chunk.js.map",
+    "544.1fed009e.chunk.js.map": "/static/js/544.1fed009e.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.86cc7215.css",
+    "static/js/main.77164948.js"
+  ]
+}

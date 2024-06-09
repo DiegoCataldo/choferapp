@@ -5,8 +5,14 @@ import { connect } from 'react-redux'
 import { firestoreConnect } from 'react-redux-firebase'
 import { compose } from 'redux'
 import { Redirect } from 'react-router-dom'
-import UrgenciasTable from "./UrgenciasTable"
+import TableTiempos from "./TableTiempos"
+import Cards from "./Cards"
 import moment from "moment";
+import "./dashboard.css"
+import ChartAP from "./ChartAP"
+import ChartRP from "./ChartRP"
+import ChartEECC from "./ChartEECC"
+
 
 
 
@@ -15,30 +21,75 @@ class Dashboard extends Component {
 
   state = {
 
-    columnsActividades: [
-      { title: 'Patente', field: 'patente' },
-      { title: 'Semiremolque', field: 'semiremolque' },
-      { title: 'Actividad', field: 'nombreActividad' },
-      { title: 'Ubicacion Cercana', field: 'text_ub_cercana'},
-      { title: 'Fecha Ingreso', field: 'fechacreacion' },
-  
-    ],
-    dataActividades: [
+    columnsContratos: [
+      { title: 'Proyecto', field: 'Proyecto' },
+      { title: 'DEN', field: 'DEN' },
+      { title: 'A la espera EECC', field: 'A la espera contratista' },
+      { title: 'Revisión Pendiente', field: 'Revision pendiente' },
+      { title: 'Aprobación pendiente', field: 'Aprobacion pendiente' },
 
+    ],
+    dataContratos: [
+
+    ],
+
+    optionsColumn: {
+      chart: {
+        id: "basic-bar",
+        barHeight: '70%'
+      },
+      dataLabels: {
+        enabled: true,
+        style: {
+          fontSize: '15px',
+          fontFamily: 'Helvetica, Arial, sans-serif',
+          fontWeight: 'bold'
+        }
+      },
+      fill:{
+        colors: ['#0b5e8e'],
+      },
+      
+      responsive: [{
+        breakpoint: 480,
+        options: {
+         
+          chart: {
+            height: 300
+          },
+          dataLabels: {
+            style: {
+              fontSize: '10px'
+            }
+          },
+        
+        }
+      }],
+      xaxis: {
+        categories: ['Tove CC-001', 'Carén CC-123', 'Talabre CC-XXX',"Pampa Austral CC-001"]
+      },
+      colors: ['#2E93fA', '#66DA26', '#546E7A', '#E91E63'],
+    },
+
+    seriesColumn: [
+      {
+        name: "Tiempo Mes Actual",
+        data: [0.5, 2, 1.7,1]
+      }
+     
     ]
   }
 
-  calculateDistance(lattitude1, longittude1,lattitude2,longittude2)
-{
-    
-const toRadian = n => (n * Math.PI) / 180
+  calculateDistance(lattitude1, longittude1, lattitude2, longittude2) {
+
+    const toRadian = n => (n * Math.PI) / 180
 
     let lat2 = lattitude2
     let lon2 = longittude2
     let lat1 = lattitude1
     let lon1 = longittude1
 
-    console.log(lat1, lon1+"==="+lat2, lon2)
+    console.log(lat1, lon1 + "===" + lat2, lon2)
     let R = 6371  // km
     let x1 = lat2 - lat1
     let dLat = toRadian(x1)
@@ -49,49 +100,57 @@ const toRadian = n => (n * Math.PI) / 180
       Math.cos(toRadian(lat1)) * Math.cos(toRadian(lat2)) * Math.sin(dLon / 2) * Math.sin(dLon / 2)
     let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
     let d = R * c
-    console.log("distance==?",d)
-    return d 
-      }
+    console.log("distance==?", d)
+    return d
+  }
 
   static getDerivedStateFromProps(nextProps, state) {
-    
-    var {actividades } = nextProps;
 
-    var newArrayActividades;
-
-    if (actividades) {
-
-      newArrayActividades = actividades.map(actividad => {
-        var newArrayActividades = Object.assign({}, actividad, { nombreActividad: actividad.actividad });
-        newArrayActividades = Object.assign({}, newArrayActividades, { fechacreacion: moment(actividad.creationDate.toDate()).format('YYYY/MM/DD') });
-        var text_ub_cercana = "a " + actividad.distance_ub_cercana.toString().substr(0,4) + "KM de " + actividad.nombre_ub_cercana;
-        newArrayActividades = Object.assign({}, newArrayActividades, { text_ub_cercana: text_ub_cercana });
-
-
-        return newArrayActividades;
-      });
-    }
+    var { contratos } = nextProps;
+    console.log(contratos);
 
     return {
-      dataActividades: actividades ? newArrayActividades : [],
+      dataContratos: contratos,
+    }
   }
-}
 
   render() {
     const { projects, auth, notifications, actividades } = this.props;
-    if (!auth.uid) return <Redirect to='/signin' /> 
+    if (!auth.uid) return <Redirect to='/signin' />
 
     return (
       <div className="dashboard container">
         <div className="row">
-        <div className="col-12 col-md-12 ">
-           <UrgenciasTable  columns={this.state.columnsActividades} data={this.state.dataActividades} propsUrg={this.props}  />
+        <h4 className="card-header-per text-center   padding-bottom-1 margin-top-2 h3-v1">Tiempos Daily Reports</h4>
+          <div className="col-12 col-md-12 ">
+            <Cards />
           </div>
-          <div className="col s12 m6">
-            <ProjectList projects={projects} />
+
+
+
+          <div className="col-12 col-md-12 ">
+            <div className="row">
+            <h4 className="card-header-per text-center light-blue-text text-darken-4  padding-bottom-1 margin-bottom-1 h4-v1">Tiempos por Contrato</h4>
+              <div className="col m4 ">
+                <ChartEECC optionsColumn={this.state.optionsColumn} seriesColumn={this.state.seriesColumn} />
+              </div>
+              <div className="col m4">
+                <ChartRP optionsColumn={this.state.optionsColumn} seriesColumn={this.state.seriesColumn} />
+              </div>
+              <div className="col m4">
+                <ChartAP optionsColumn={this.state.optionsColumn} seriesColumn={this.state.seriesColumn} />
+              </div>
+            </div>
           </div>
-          <div className="col s12 m5 offset-m1">
-            <Notifications notifications={notifications} />
+          
+          <div className="col-12 col-md-12 ">
+            <TableTiempos columns={this.state.columnsContratos} data={this.state.dataContratos} propsUrg={this.props} />
+          </div>
+          <div classname="container-fluid">
+
+
+
+
           </div>
 
         </div>
@@ -105,7 +164,7 @@ const mapStateToProps = (state) => {
   return {
     projects: state.firestore.ordered.projects,
     auth: state.firebase.auth,
-    actividades: state.firestore.ordered.Actividades,
+    contratos: state.firestore.ordered.Contratos,
     notifications: state.firestore.ordered.notifications,
     ubicaciones: state.firestore.ordered.ubicaciones
 
@@ -115,10 +174,10 @@ const mapStateToProps = (state) => {
 export default compose(
   connect(mapStateToProps),
   firestoreConnect([
-    { collection: 'projects', orderBy: ['createdAt', 'desc']},
-    { collection: 'notifications', limit: 3, orderBy: ['time', 'desc']},
-    { collection: 'Actividades', orderBy: ['creationDate', 'desc']},
-    { collection: 'ubicaciones', orderBy: ['createdAt', 'desc']}
+    { collection: 'projects', orderBy: ['createdAt', 'desc'] },
+    { collection: 'notifications', limit: 3, orderBy: ['time', 'desc'] },
+    { collection: 'Contratos' },
+    { collection: 'ubicaciones', orderBy: ['createdAt', 'desc'] }
 
   ])
 )(Dashboard)

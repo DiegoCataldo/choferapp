@@ -7,8 +7,14 @@ import SignIn from './components/auth/SignIn'
 import SignUp from './components/auth/SignUp'
 import MakeAdmin from './components/auth/MakeAdmin'
 import CreateProject from './components/projects/CreateProject'
-import GestionLocations from './components/locations/gestionLocations';
-import CreateLocation  from './components/locations/CreateLocation';
+import GestionLocations from './components/locations/gestionLocations'
+import viewDailys from './components/Daily/viewDaily/viewDailys';
+import editDaily from './components/Daily/editDaily/editDaily';
+import DashCttoTiempos from './components/dashboard/DashCttoTiempos'
+import DailyEnviado from './components/Daily/editDaily/DailyEnviado';
+import DashCttoProg from './components/dashboard/DashCttoProg'
+
+
 
 class App extends Component {
   render() {
@@ -17,14 +23,20 @@ class App extends Component {
         <div className="App">
           <Navbar />
           <Switch>
-            <Route exact path='/'component={Dashboard} />
+            <Route exact path='/'component={DashCttoTiempos} />
             <Route path='/project/:id' component={ProjectDetails} />
             <Route path='/signin' component={SignIn} />
             <Route path='/signup' component={SignUp} />
             <Route path='/create' component={CreateProject} />
             <Route path='/makeadmin' component={MakeAdmin} />
-            <Route path='/gestionlocations' component={GestionLocations} />
-            <Route path='/createLocation' component={CreateLocation} />
+            <Route path='/viewDailys' component={viewDailys} />
+            <Route path='/editDaily' component={editDaily} />
+            <Route path='/gestionLocations' component={GestionLocations} />
+            <Route path='/DashCttoTiempos' component={DashCttoTiempos} />
+            <Route path='/DailyEnviado' component={DailyEnviado} />
+            <Route path='/DashCttoProg' component={DashCttoProg} />
+
+
 
           </Switch>
         </div>
